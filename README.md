@@ -4,7 +4,7 @@
 
 <p align="center">
   <a href="#-Technologies">Technologies</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
-  <a href="#:memo: License">License</a>
+  <a href="#License">License</a>
 </p>
 
 ## 🚀 Technologies
