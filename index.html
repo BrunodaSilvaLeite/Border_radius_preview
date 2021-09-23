@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+ body {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  width: 100vw;
+  height: 100vh;
+}
+
+section#middle-part {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+  width: 450px;
+  height: 450px;
+}
+
+section#left, 
+section#right {
+  height: 30rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+#square {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 350px;
+  min-height: 350px;
+  background-color: #ffffff;
+  border: 0;
+  margin: 0;
+  box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+}
+
+input {
+  width: 4rem; 
+  height: 2rem;
+  display: flex;
+  font-size: 1.3rem;
+  border: 0;
+  box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+}
+
+#textarea-values {
+  width: 86%;
+  resize: none;
+  border: 0;
+  background-color: transparent;
+  font-size: 14px;
+}
+
+#copy-code {
+  width: 3rem;
+  height: 3rem;
+  margin-top: 1rem;
+  border-radius: 100%;
+  cursor: pointer;
+  border: 0;
+  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+  background-color: transparent;
+  transition: ease .5s;
+}
+
+#copy-code:hover {
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}
+</style>
+<body>
+  <section id="left">
+    <input type="number" min="1" max="100" id="top-left" value="">
+    <input type="number" min="1" max="100" id="bottom-left" value="">
+  </section>
+  
+  <section id="middle-part">
+    <div id="square">
+      <textarea id="textarea-values" cols="38" rows="12" readonly disabled></textarea>
+    </div>
+    <button type="button" id="copy-code">
+      <i class="far fa-clone"></i>
+    </button>
+  </section>
+  
+  <section id="right">
+    <input type="number" min="1" max="100" id="top-right" value="">
+    <input type="number" min="1" max="100" id="bottom-right" value="">
+  </section>
+
+      <script type="text/javascript">
+      // Checklist
+// 1. Pegar inputs; - CHECK
+// 2. Pegar textarea; - CHECK
+// 3. Pegar icone de copy; - CHECK
+// 4. Pegar div#rectangle; - CHECK
+// 4. AddEventListeners(tipo input) para cada input, chama function UpdateBorderRadius; - CHECK
+// 5. Criar function UpdateBorderRadius, para alterar o border radius da div#rectangle; - CHECK
+// 6. Para cada valor alterado atualizar conteudo do textarea; che
+// 7. Para cada click no icone, copia o conteudo do textarea
+
+const inputTopLeft = document.getElementById('top-left');
+const inputTopRight = document.getElementById('top-right');
+const inputBottomLeft = document.getElementById('bottom-left');
+const inputBottomRight = document.getElementById('bottom-right');
+const squareDiv = document.getElementById('square');
+const textArea = document.getElementById('textarea-values');
+const copyButton = document.getElementById('copy-code');
+
+let borderTopLeft = "";
+let borderTopRight = "";
+let borderBottomLeft = "";
+let borderBottomRight = "";
+const borders = [borderTopLeft, borderTopRight, borderBottomLeft, borderBottomRight]
+
+// TEXT AREA FUNCTIONS
+function updateTextArea() {
+  let textAreaContent = "";
+  
+  borders.forEach(border => {
+    if (border !== "") {
+      textAreaContent += `
+      ${border}`;
+    }
+  })
+  
+  textArea.innerHTML = textAreaContent;
+}
+
+// CHECK BORDER RADIUS FUNCTION
+function checkBorder() {
+  borders.forEach((border, index) => {
+    if(border === "") {
+      return;
+    }
+    
+    const splittedBorder = border.split('-');
+    if(splittedBorder[3] === "radius = px") {
+      borders[index] = "";
+    }
+  })
+}
+
+// FUNCTIONS TO UPDATE BORDER RADIUS
+function updateBorderRadiusTopLeft(borderRadiusValue) {
+  const borderRadiusPixels = `${borderRadiusValue}px`;
+  squareDiv.style.borderTopLeftRadius = borderRadiusPixels;
+  
+  borders[0] = `border-top-left-radius = ${borderRadiusPixels}`;
+  checkBorder();
+  updateTextArea();
+}
+
+function updateBorderRadiusTopRight(borderRadiusValue) {
+  const borderRadiusPixels = `${borderRadiusValue}px`;
+  squareDiv.style.borderTopRightRadius = borderRadiusPixels;
+  
+  borders[1] = `border-top-right-radius = ${borderRadiusPixels}`;
+  checkBorder();
+  updateTextArea();
+}
+
+function updateBorderRadiusBottomLeft(borderRadiusValue) {
+  const borderRadiusPixels = `${borderRadiusValue}px`;
+  squareDiv.style.borderBottomLeftRadius = borderRadiusPixels;
+  
+  borders[2] = `border-bottom-left-radius = ${borderRadiusPixels}`;
+  checkBorder();
+  updateTextArea();
+}
+
+function updateBorderRadiusBottomRight(borderRadiusValue) {
+  const borderRadiusPixels = `${borderRadiusValue}px`;
+  squareDiv.style.borderBottomRightRadius = borderRadiusPixels;
+  
+  borders[3] = `border-bottom-right-radius = ${borderRadiusPixels}`;
+  checkBorder();
+  updateTextArea();
+}
+  function copyTextArea() {
+   /*  textArea.select();
+    document.execCommand('copy')
+    console.log(textArea); */
+  }
+
+
+
+// ADD EVENT LISTENERS
+inputTopLeft.addEventListener('input', (event) => {
+  updateBorderRadiusTopLeft(event.target.value);
+})
+
+inputTopRight.addEventListener('input', (event) => {
+  updateBorderRadiusTopRight(event.target.value);
+})
+
+inputBottomLeft.addEventListener('input', (event) => {
+  updateBorderRadiusBottomLeft(event.target.value);
+})
+
+inputBottomRight.addEventListener('input', (event) => {
+  updateBorderRadiusBottomRight(event.target.value);
+})
+copyButton.addEventListener('click', (event) => {
+  
+})
+
+      </script>
+</body>
+</html>
