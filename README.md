@@ -1,5 +1,5 @@
 <p align = "center" >
-  <h1 align="center">Border radius preview :construction_worker:</h1>
+  <h1 align="center">Border radius preview </h1>
 </p>
 
 <p align="center">
